@@ -21,12 +21,60 @@ const slides = [
   }
 ]
 
+const arrowLeft   = document.querySelector(".arrow_left");
+const arrowRight  = document.querySelector(".arrow_right");
+const dots        = document.querySelector(".dots");
+const bannerImg   = document.querySelector(".banner-img");
+const bannerText  = document.querySelector("#banner p");
+
+const LENGTH = slides.length;
 // ********** VARIABLES **********
 
-
+let currentSlide = 0;
 
 // ********** FUNCTIONS **********
 
+const switchSlide = (i) => {
+  const allDots = dots.children;
+  bannerImg.src = `./assets/images/slideshow/${slides[i].image}`;
+  bannerText.innerText = slides[i].tagLine;
 
+  for (let i = 0; i < allDots.length; i++) {
+    allDots[i].classList.toggle("dot_selected", i === currentSlide);
+  }
+  currentSlide = i;
+}
+
+const slideToLeft = () => {
+  console.log(typeof currentSlide, currentSlide);
+  currentSlide = (currentSlide - 1 + LENGTH) % LENGTH;
+  console.log(typeof currentSlide, currentSlide);
+}
+
+const slideToRight = () => {
+  console.log(typeof currentSlide, currentSlide);
+  currentSlide = (currentSlide + 1) % LENGTH;
+  console.log(typeof currentSlide, currentSlide);
+}
+
+const addDots = () => {
+  for (let i = 0; i < LENGTH; i++) {
+    const dot = document.createElement("div");
+    dot.classList.add("dot");
+
+    dot.addEventListener("click", () => { switchSlide(i) });
+    if (i === currentSlide) dot.classList.add("dot_selected");
+    dots.appendChild(dot);
+  }
+}
+
+const addListeners = () => {
+  arrowLeft.addEventListener("click", slideToLeft);
+  arrowRight.addEventListener("click", slideToRight);
+}
 
 // ********** MAIN **********
+
+addDots();
+addListeners();
+
