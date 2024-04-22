@@ -37,7 +37,7 @@ let currentSlide = 0;
 const switchSlide = (i) => {
   const allDots = dots.children;
   bannerImg.src = `./assets/images/slideshow/${slides[i].image}`;
-  bannerText.innerText = slides[i].tagLine;
+  bannerText.innerHTML = slides[i].tagLine;
 
   for (let i = 0; i < allDots.length; i++) {
     allDots[i].classList.toggle("dot_selected", i === currentSlide);
@@ -46,15 +46,13 @@ const switchSlide = (i) => {
 }
 
 const slideToLeft = () => {
-  console.log(typeof currentSlide, currentSlide);
-  currentSlide = (currentSlide - 1 + LENGTH) % LENGTH;
-  console.log(typeof currentSlide, currentSlide);
+  const newIndex = (currentSlide - 1 + LENGTH) % LENGTH;
+  switchSlide(newIndex);
 }
 
 const slideToRight = () => {
-  console.log(typeof currentSlide, currentSlide);
-  currentSlide = (currentSlide + 1) % LENGTH;
-  console.log(typeof currentSlide, currentSlide);
+  const newIndex = (currentSlide + 1) % LENGTH;
+  switchSlide(newIndex);
 }
 
 const addDots = () => {
